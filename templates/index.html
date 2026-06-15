@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>AI Resume Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+```
+<h1> AI Resume Analyzer</h1>
+<p class="subtitle">
+    Analyze your resume against a job description and improve your ATS score.
+</p>
+
+<form action="/" method="POST" enctype="multipart/form-data">
+
+    <label>Upload Resume (PDF)</label>
+    <input type="file" name="resume" accept=".pdf" required>
+
+    <label>Paste Job Description</label>
+
+    <textarea
+        name="job_desc"
+        rows="8"
+        placeholder="Paste job description here..."
+    ></textarea>
+
+    <button type="submit">
+        Analyze Resume
+    </button>
+
+</form>
+
+{% if score is not none %}
+
+<div class="card">
+
+    <h2>ATS Score</h2>
+
+    <div class="progress-bar">
+        <div class="progress-fill" style="width: {{ score }}%;">
+            {{ score }}%
+        </div>
+    </div>
+
+</div>
+
+<div class="card">
+
+    <h3>✅ Matched Skills</h3>
+
+    <ul>
+        {% for skill in matched_skills %}
+        <li>{{ skill }}</li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+<div class="card">
+
+    <h3>❌ Missing Skills</h3>
+
+    <ul>
+        {% for skill in missing_skills %}
+        <li>{{ skill }}</li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+<div class="card">
+
+    <h3>💡 Recommendations</h3>
+
+    <ul>
+        {% for skill in missing_skills %}
+        <li>
+            Add projects, coursework, or certifications related to
+            <strong>{{ skill }}</strong>.
+        </li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+<div class="card">
+
+    <h3>📋 Resume Health Check</h3>
+
+    <h4>Found Sections</h4>
+
+    <ul>
+        {% for section in found_sections %}
+        <li>✅ {{ section }}</li>
+        {% endfor %}
+    </ul>
+
+    <h4>Missing Sections</h4>
+
+    <ul>
+        {% for section in missing_sections %}
+        <li>❌ {{ section }}</li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+{% endif %}
+```
+
+</div>
+
+</body>
+</html>
